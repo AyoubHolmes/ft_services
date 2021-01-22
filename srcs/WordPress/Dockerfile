@@ -13,14 +13,9 @@ RUN rc-update add nginx default
 RUN apk add openssl 
 RUN openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=mydomain.com" -addext "subjectAltName=DNS:mydomain.com" -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
 RUN apk update
-RUN apk add openssh
-RUN rc-update add sshd default
-RUN rm /etc/ssh/sshd_config
-COPY ./srcs/ssh.conf /etc/ssh/sshd_config
 COPY ./srcs/setup.sh /setup.sh
 COPY ./srcs/pwd /pwd
 RUN chmod 777 /setup.sh
-RUN  echo -e "azerty\nazerty" | adduser test
 RUN openrc default
 
 ENTRYPOINT ["/setup.sh" ]
