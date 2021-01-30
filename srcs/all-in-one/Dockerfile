@@ -7,7 +7,7 @@ RUN mkdir /www
 RUN chown -R www:www /var/lib/nginx
 RUN chown -R www:www /www
 RUN echo "<h1>Hello world!</h1>" > /www/index.html
-COPY ./src/nginx.conf /etc/nginx/nginx.conf
+COPY ./srcs/nginx.conf /etc/nginx/nginx.conf
 RUN apk add openrc
 RUN rc-update add nginx default
 ###################
@@ -19,7 +19,7 @@ RUN mv /wordpress /www/wordpress
 RUN ln -s /www/wordpress /var/www/localhost/htdocs/wordpress
 RUN rc-update add php-fpm7 default
 ###################
-COPY ./src/setup.sh /setup.sh
+COPY ./srcs/setup.sh /setup.sh
 RUN chmod 777 /setup.sh
 
 ENTRYPOINT ["/setup.sh" ]
