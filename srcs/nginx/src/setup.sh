@@ -2,12 +2,25 @@
 	openrc default
 	/etc/init.d/sshd restart
 	/bin/sh
-	#while :
-	#do
-	#	var_nginx=`rc-service nginx status | grep -c 'stopped'`
-	#	if [ $var_nginx -eq 1 ]
-	#	then
-	#		echo "nginx service stopped"
-	#		exit
-	#	fi
-	#done
+
+while sleep 1;
+    do
+        pgrep nginx > /dev/null
+        nginx_status=$?
+        if [ $nginx_status -ne 0 ]; then
+            echo "Nginx service is not running ..."
+            exit
+        fi
+        # pgrep telegraf > /dev/null
+        # telegraf_status=$?
+        # if [ $telegraf_status  -ne 0 ]; then
+        #     echo "Telegraf service is not running ..."
+        #     exit
+        # fi
+        pgrep sshd > /dev/null
+        sshd_status=$?
+        if [ $sshd_status  -ne 0 ]; then
+            echo "sshd is not running ..."
+            exit
+        fi
+    done
