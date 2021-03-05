@@ -1,5 +1,7 @@
-service telegraf start
-service influxdb start
+#!bin/sh
+rc-service telegraf start
+
+cd grafana && ./bin/grafana-server
 
 sleep 5
 while sleep 2;
@@ -10,10 +12,10 @@ while sleep 2;
             echo "Telegraf service is not running ..."
             exit 1
         fi
-        pgrep influxd > /dev/null
-        influxdb_status=$?
-        if [ $influxdb_status  -ne 0 ]; then
-            echo "Influxdb service is not running ..."
+        pgrep grafana-server > /dev/null
+        grafana_status=$?
+        if [ $grafana_status  -ne 0 ]; then
+            echo "Grafana is not running ..."
             exit 1
         fi
     done
