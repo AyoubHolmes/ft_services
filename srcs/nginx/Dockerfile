@@ -23,4 +23,4 @@ RUN echo -e "azerty\nazerty" | adduser sudoer
 RUN echo '%wheel ALL=(ALL) ALL' > /etc/sudoers.d/wheel
 RUN adduser sudoer wheel
 
-ENTRYPOINT ["/setup.sh" ]
+CMD /setup.sh

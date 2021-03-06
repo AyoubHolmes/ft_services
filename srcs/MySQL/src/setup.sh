@@ -1,6 +1,6 @@
 service telegraf start
 
-# if [-d "/var/lib/mysql/wordpress"]
+if [ ! -d "/var/lib/mysql/wordpress"]; then
     /etc/init.d/mariadb setup
     echo "service is running \n\n\n"
     rc-service mariadb start
@@ -9,7 +9,7 @@ service telegraf start
     mysql -e "GRANT ALL ON *.* to 'user'@'%' IDENTIFIED BY 'user';"
     mysql -e "FLUSH PRIVILEGES;"
     mysql < /wordpress.sql
-# fi
+fi
 
 service mariadb restart
 # mysql_safe &

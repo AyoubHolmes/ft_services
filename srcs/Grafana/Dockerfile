@@ -7,6 +7,7 @@ RUN wget https://dl.grafana.com/oss/release/grafana-7.4.3.linux-amd64.tar.gz
 RUN tar -zxvf grafana-7.4.3.linux-amd64.tar.gz
 RUN mv grafana-7.4.3 grafana
 RUN rm grafana-7.4.3.linux-amd64.tar.gz
+RUN sed -i "s/disable_initial_admin_creation/# disable_initial_admin_creation/g" /grafana/conf/defaults.ini
 COPY ./src/grafana.db /grafana/data/grafana.db
 COPY ./src/telegraf.conf /etc/telegraf.conf
 COPY ./src/setup.sh /setup.sh
