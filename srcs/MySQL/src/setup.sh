@@ -8,7 +8,7 @@ service telegraf start
     mysql -e "CREATE DATABASE wordpress;"
     mysql -e "GRANT ALL ON *.* to 'user'@'%' IDENTIFIED BY 'user';"
     mysql -e "FLUSH PRIVILEGES;"
-    mysql < /wordpress1.sql
+    mysql < /wordpress.sql
 # fi
 
 service mariadb restart

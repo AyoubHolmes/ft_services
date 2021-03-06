@@ -6,7 +6,7 @@ RUN openrc && touch /run/openrc/softlevel
 COPY ./src/queries.sql /queries.sql
 RUN sed -i "s/skip-networking/# skip-networking/g" /etc/my.cnf.d/mariadb-server.cnf
 COPY ./src/setup.sh /setup.sh
-COPY ./src/wordpress1.sql /wordpress1.sql
+COPY ./src/wordpress.sql /wordpress.sql
 COPY ./src/telegraf.conf /etc/telegraf.conf
 RUN chmod 777 /setup.sh 
 
