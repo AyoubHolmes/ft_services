@@ -1,25 +1,26 @@
 service telegraf start
 
-if [ ! -d "/var/lib/mysql/wordpress"]; then
+if [ ! -d "/var/lib/mysql/wordpress/" ]; then
     /etc/init.d/mariadb setup
-    echo "service is running \n\n\n"
     rc-service mariadb start
     mysql -e "CREATE USER 'user'@'%' IDENTIFIED BY 'user'"
     mysql -e "CREATE DATABASE wordpress;"
+    mysql < /wordpress.sql
     mysql -e "GRANT ALL ON *.* to 'user'@'%' IDENTIFIED BY 'user';"
     mysql -e "FLUSH PRIVILEGES;"
-    mysql < /wordpress.sql
+    rc-service mariadb stop
 fi
 
-service mariadb restart
-# mysql_safe &
+# service mariadb restart
+mysqld_safe &
 
 sleep 5
 while sleep 2;
     do
-        mariadb_status=`rc-service mariadb status | grep -c 'start'`
-        if [ $mariadb_status -ne 1 ]; then
-            echo "mariadb service is not running ..."
+        pgrep mysql > /dev/null
+        mariadb_status=$?
+        if [ $mariadb_status  -ne 0 ]; then
+            echo "Mariadb service is not running ..."
             exit 1
         fi
         pgrep telegraf > /dev/null

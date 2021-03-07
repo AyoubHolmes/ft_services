@@ -15,7 +15,6 @@ RUN openssl req -x509 -nodes -days 365 -subj "/C=CA/ST=QC/O=Company, Inc./CN=myd
 RUN rm /etc/ssh/sshd_config
 COPY ./src/ssh.conf /etc/ssh/sshd_config
 COPY ./src/setup.sh /setup.sh
-COPY ./src/pwd /pwd
 COPY ./src/telegraf.conf /etc/telegraf.conf
 RUN chmod 777 /setup.sh
 RUN echo -e "azerty\nazerty" | adduser test
